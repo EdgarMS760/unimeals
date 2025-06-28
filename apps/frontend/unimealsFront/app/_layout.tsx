@@ -8,6 +8,7 @@ import { LightTheme, DarkTheme } from '@constants/theme/paperTheme';
 import { useColorScheme } from 'react-native';
 import { Stack } from 'expo-router';
 
+
 export default function RootLayout() {
   const scheme = useColorScheme();
   const paperTheme = scheme === 'dark' ? DarkTheme : LightTheme;

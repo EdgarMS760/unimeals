@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import {Tabs} from 'expo-router';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import CustomTabBar from '@components/ui/CustomTabBar';
@@ -45,6 +45,17 @@ export default function TabLayout() {
             ),
           }}
         />
+       
+        <Tabs.Screen
+                name="login"
+                options={{
+                    title: 'Log In',
+                    tabBarIcon: ({ color, size }) => (
+                        <AntDesign name="home" size={24} color="black" />
+                    ),
+                    tabBarStyle: { display: 'none'}
+                }}
+            />
       </Tabs>
     </View>
   );
