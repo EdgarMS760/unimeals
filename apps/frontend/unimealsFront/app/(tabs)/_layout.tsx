@@ -7,37 +7,44 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
+     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: {
+          backgroundColor: '#ffffff',
+          height: 60,
+          borderTopWidth: 0,
+          elevation: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
+        tabBarActiveTintColor: '#6200ee',
+        tabBarInactiveTintColor: '#999999',
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="feed"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Inicio',
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="home" size={24} color="black" />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="profile"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Perfil',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>

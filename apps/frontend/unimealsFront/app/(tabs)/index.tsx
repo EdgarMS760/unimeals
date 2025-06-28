@@ -5,6 +5,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export default function HomeScreen() {
   return (
@@ -16,6 +17,7 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+        <ActivityIndicator animating={true} color={MD2Colors.red800} />
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
