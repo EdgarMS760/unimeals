@@ -1,4 +1,3 @@
-import { PaperProvider } from 'react-native-paper'; 
 import {
   ThemeProvider as NavigationThemeProvider,
   DefaultTheme as NavigationLightTheme,
@@ -6,7 +5,10 @@ import {
 } from '@react-navigation/native';
 import { LightTheme, DarkTheme } from '@constants/theme/paperTheme';
 import { useColorScheme } from 'react-native';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { PaperProvider } from 'react-native-paper';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function RootLayout() {
   const scheme = useColorScheme();
@@ -25,13 +27,15 @@ export default function RootLayout() {
   };
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <NavigationThemeProvider value={navigationTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </NavigationThemeProvider>
-    </PaperProvider>
+    <GestureHandlerRootView>
+
+      <SafeAreaProvider>
+        <PaperProvider theme={paperTheme}>
+          <NavigationThemeProvider value={navigationTheme}>
+            <Slot />
+          </NavigationThemeProvider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

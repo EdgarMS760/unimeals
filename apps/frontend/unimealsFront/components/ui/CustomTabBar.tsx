@@ -65,8 +65,8 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                         }
                     };
 
-                    const iconColor = isFocused ? '#000' : '#999';
-                    const icon = options.tabBarIcon?.({ color: iconColor, size: 26, focused: isFocused });
+                    const iconColor = isFocused ? '#000' : '#d6d6d6';
+                    const icon = options.tabBarIcon?.({ color: iconColor, focused: isFocused });
 
                     return (
                         <TouchableOpacity key={route.key} style={styles.tabButton} onPress={onPress}>
@@ -93,8 +93,8 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                         }
                     };
 
-                    const iconColor = isFocused ? '#000' : '#999';
-                    const icon = options.tabBarIcon?.({ color: iconColor, size: 26, focused: isFocused });
+                    const iconColor = isFocused ? '#000' : '#d6d6d6';
+                    const icon = options.tabBarIcon?.({ color: iconColor, size: 26, focused: isFocused});
 
                     return (
                         <TouchableOpacity key={route.key} style={styles.tabButton} onPress={onPress}>
@@ -115,7 +115,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
 
 const styles = StyleSheet.create({
     wrapper: {
-        height: 45,
+        height: 75,
         width: '100%',
         position: 'absolute',
         bottom: 0,
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
     },
     fabContainer: {
         position: 'absolute',
-        bottom: 5,
+        bottom: 45,
         left: '50%',
         transform: [{ translateX: -30 }],
-        zIndex: 10,
+        zIndex: 10
     },
     fab: {
         width: 60,
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
 
     leftTabIcons: {
         position: 'absolute',
-        left: 20,
-        bottom: 0,
+        left: 5,
+        bottom: 10,
         height: '100%',
         width: 120,
         flexDirection: 'row',
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
     },
     rightTabIcons: {
         position: 'absolute',
-        right: 20,
-        bottom: 0,
+        right: 5,
+        bottom: 10,
         height: '100%',
         width: 120,
         flexDirection: 'row',

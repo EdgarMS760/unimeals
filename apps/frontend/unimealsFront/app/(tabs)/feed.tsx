@@ -1,11 +1,66 @@
-import { View, Text } from 'react-native';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import ProductCard from '@ui/ProductCard';
+import FilterButton from '@ui/filterBar/FilterButton';
 
 export default function Feed() {
+    const initialData = [
+        {
+            images: ['https://picsum.photos/200/300', 'https://picsum.photos/600/400'],
+            title: 'tacos',
+            description: '5 tacos con salsa',
+            location: 'FCFM',
+            price: '80',
+            sellerName: 'john doe',
+            sellerRating: 4.7,
+        },
+        {
+            images: ['https://picsum.photos/200/300', 'https://picsum.photos/600/400'],
+            title: 'gomitas',
+            description: 'gomitas bien muertas',
+            location: 'FCFM',
+            price: '10',
+            sellerName: 'Pedro Pérez',
+            sellerRating: 4.5,
+        },
+    ];
+
+    const [data, setData] = useState(initialData);
+
+    // Simulación de lazy load
+    const loadMore = () => {
+        const moreItems = [
+            {
+                images: ['https://picsum.photos/seed/picsum1/600/400', 'https://picsum.photos/seed/picsum2/600/400'],
+                title: 'test',
+                description: 'Test item description',
+                location: 'FCFM',
+                price: '90',
+                sellerName: 'Ana Ríos',
+                sellerRating: 4.9,
+            },
+        ];
+        setData((prev) => [...prev, ...moreItems]);
+    };
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', color: MD2Colors.white }}>este es el feed</Text>
-            <ActivityIndicator animating={true} color={MD2Colors.red800} />
-        </View>
+        <>
+             <FilterButton />
+            <FlatList
+                contentContainerStyle={styles.list}
+                data={data}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item }) => <ProductCard {...item} />}
+                onEndReached={loadMore}
+                onEndReachedThreshold={0.2}
+            />
+        </>
     );
 }
+
+const styles = StyleSheet.create({
+    list: {
+        paddingVertical: 16,
+        paddingHorizontal: 12,
+    },
+});

@@ -12,7 +12,7 @@ export default function TabLayout() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <Header /> {/* 👈 Este es tu header común para todas las tabs */}
+      <Header />
 
       <Tabs
         tabBar={(props) => <CustomTabBar {...props} />}

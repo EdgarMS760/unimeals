@@ -14,6 +14,8 @@ export const LightTheme: MD3Theme = {
     surface: '#ffffff',
     onSurface: '#111827',
     error: '#ef4444',
+
+    backgroundSecondary: '#e8ede9',
   },
 };
 
@@ -28,5 +30,7 @@ export const DarkTheme: MD3Theme = {
     surface: '#1e1e1e',
     onSurface: '#fefefe',
     error: '#f87171',
+
+    backgroundSecondary: '#7f7f80',
   },
 };
