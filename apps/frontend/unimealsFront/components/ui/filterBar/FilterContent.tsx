@@ -1,30 +1,35 @@
-import { FilterData } from '@constants/FilterData';
+import { FilterData, orderBy, categories, locations } from '@constants/FilterData';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Chip, Button, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const categories = ['Comida', 'Bebidas', 'Farmacia', 'Tiendas'];
-const locations = ['Cerca de mí', 'Centro', 'Zona norte'];
-
 type Props = {
-    value: FilterData; // para persistencia
+    value: FilterData;
     onClear: () => void;
     onChange: (filters: FilterData) => void;
 };
+
 
 export default function FilterContent({ value, onClear, onChange }: Props) {
     const { colors } = useTheme();
 
     const [selectedLocations, setSelectedLocations] = useState<string[]>(value.location || []);
     const [selectedCategories, setSelectedCategories] = useState<string[]>(value.category || []);
+    const [selectedOrderBy, setSelectedOrderBy] = useState<string | null>(value.orderBy || null);
+
+    const handleSelectOrderBy = (value: string) => {
+        setSelectedOrderBy(prev => (prev === value ? null : value));
+    };
 
     useEffect(() => {
         onChange({
             location: selectedLocations,
             category: selectedCategories,
+            orderBy: selectedOrderBy,
         });
-    }, [selectedLocations, selectedCategories]);
+    }, [selectedLocations, selectedCategories, selectedOrderBy]);
+
 
     const toggleItem = (item: string, list: string[], setList: (l: string[]) => void) => {
         if (list.includes(item)) {
@@ -37,11 +42,42 @@ export default function FilterContent({ value, onClear, onChange }: Props) {
     const handleClear = () => {
         setSelectedLocations([]);
         setSelectedCategories([]);
+        setSelectedOrderBy(null);
         onClear();
     };
 
+
     return (
         <View style={styles.container}>
+            <Text style={[styles.title, { color: colors.onSurface }]}>Ordenar Por:</Text>
+            <View style={styles.chips}>
+                {orderBy.map(order => (
+                    <Chip
+                        key={order}
+                        style={[
+                            styles.chip,
+                            {
+                                backgroundColor: selectedOrderBy === order
+                                    ? colors.primary
+                                    : colors.backgroundSecondary,
+                            },
+                        ]}
+                        textStyle={{
+                            color: selectedOrderBy === order ? '#fff' : colors.onSurface,
+                        }}
+                        icon={
+                            selectedOrderBy === order
+                                ? () => <MaterialIcons name="check" size={16} color="white" />
+                                : undefined
+                        }
+                        selected={selectedOrderBy === order}
+                        onPress={() => handleSelectOrderBy(order)}
+                    >
+                        {order}
+                    </Chip>
+                ))}
+            </View>
+
             <Text style={[styles.title, { color: colors.onSurface }]}>Ubicación</Text>
             <View style={styles.chips}>
                 {locations.map(loc => (

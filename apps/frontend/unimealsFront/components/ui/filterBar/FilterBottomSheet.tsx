@@ -21,6 +21,7 @@ export default function FilterBottomSheet() {
     const [filters, setFilters] = useState<FilterData>({
         location: [],
         category: [],
+        orderBy: null,
     });
 
     const handleChangeFilters = (newFilters: FilterData) => {
@@ -29,7 +30,7 @@ export default function FilterBottomSheet() {
     };
 
     const handleClear = () => {
-        setFilters({ location: [], category: [] });
+        setFilters({ location: [], category: [], orderBy: null });
     };
 
     return (

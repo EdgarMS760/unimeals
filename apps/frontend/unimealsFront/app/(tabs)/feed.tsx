@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import ProductCard from '@ui/ProductCard';
-import FilterButton from '@ui/filterBar/FilterButton';
+import FilterBottomSheet from '@ui/filterBar/FilterBottomSheet';
 
 export default function Feed() {
     const initialData = [
@@ -45,7 +45,7 @@ export default function Feed() {
 
     return (
         <>
-             <FilterButton />
+             <FilterBottomSheet />
             <FlatList
                 contentContainerStyle={styles.list}
                 data={data}
