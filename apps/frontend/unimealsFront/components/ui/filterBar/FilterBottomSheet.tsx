@@ -7,8 +7,8 @@ import {
 } from '@gorhom/bottom-sheet';
 import { Button, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import FilterContent from './FilterContent';
-import { FilterData } from '@/constants/FilterData';
+import FilterContent from '@ui/filterBar/FilterContent';
+import { FilterData } from '@types/FilterData';
 
 export default function FilterBottomSheet() {
     const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -34,10 +34,9 @@ export default function FilterBottomSheet() {
     };
 
     return (
-        <BottomSheetModalProvider>
+        <>
             <TouchableOpacity style={[styles.fab, { backgroundColor: colors.primary }]} onPress={openSheet}>
                 <MaterialIcons name="tune" size={24} color="#fff" />
-                <Text style={styles.fabText}>Filtros</Text>
             </TouchableOpacity>
 
             <BottomSheetModal
@@ -61,13 +60,14 @@ export default function FilterBottomSheet() {
                             mode="contained"
                             style={styles.applyBtn}
                             onPress={() => bottomSheetRef.current?.dismiss()}
+                            labelStyle={{ color: 'white', fontWeight: 'bold' }}
                         >
                             Aplicar
                         </Button>
                     </View>
                 </View>
             </BottomSheetModal>
-        </BottomSheetModalProvider>
+        </>
     );
 }
 
@@ -76,10 +76,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 24,
-        paddingHorizontal: 16,
-        paddingVertical: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 8,
         alignSelf: 'center',
-        marginTop: 20,
     },
     fabText: {
         color: 'white',

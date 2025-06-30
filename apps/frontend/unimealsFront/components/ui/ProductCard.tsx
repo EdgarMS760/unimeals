@@ -8,6 +8,7 @@ import {
     useWindowDimensions,
     NativeScrollEvent,
     NativeSyntheticEvent,
+    TouchableOpacity,
 } from 'react-native';
 import { Card, useTheme, Avatar } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -20,6 +21,10 @@ type Props = {
     price: string;
     sellerName: string;
     sellerRating: number;
+    deadline: string;
+    isCreator: boolean;
+    onSendMessage?: () => void;
+    onEditPost?: () => void;
 };
 
 export default function ProductCard({
@@ -30,6 +35,10 @@ export default function ProductCard({
     price,
     sellerName,
     sellerRating,
+    deadline,
+    isCreator,
+    onSendMessage,
+    onEditPost,
 }: Props) {
     const { colors } = useTheme();
     const { width } = useWindowDimensions();
@@ -98,6 +107,10 @@ export default function ProductCard({
 
                 <Text style={[styles.price, { color: colors.primary }]}>${price}</Text>
 
+                <Text style={[styles.deadline, { color: colors.error }]}>
+                    Activo hasta: {deadline}
+                </Text>
+
                 <View style={styles.sellerRow}>
                     <Avatar.Text size={36} label={sellerName[0]} />
                     <View style={styles.sellerInfo}>
@@ -110,10 +123,25 @@ export default function ProductCard({
                         </View>
                     </View>
                 </View>
+
+                {/* Botón si es creador o no */}
+                <TouchableOpacity
+                    style={[
+                        styles.actionButton,
+                        { backgroundColor: colors.primary },
+                    ]}
+                    onPress={isCreator ? onEditPost : onSendMessage}
+                    activeOpacity={0.7}
+                >
+                    <Text style={[styles.actionButtonText, { color: '#fff', fontWeight: 'bold' }]}>
+                        {isCreator ? 'Editar publicación' : 'Enviar mensaje'}
+                    </Text>
+                </TouchableOpacity>
             </Card.Content>
         </Card>
     );
 }
+
 const styles = StyleSheet.create({
     card: {
         marginVertical: 12,
@@ -160,6 +188,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '700',
     },
+    deadline: {
+        marginTop: 6,
+        fontSize: 14,
+        fontWeight: '600',
+    },
     sellerRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -181,5 +214,16 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         fontSize: 13,
         color: '#777',
+    },
+    actionButton: {
+        marginTop: 16,
+        paddingVertical: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    actionButtonText: {
+        fontWeight: '600',
+        fontSize: 16,
     },
 });

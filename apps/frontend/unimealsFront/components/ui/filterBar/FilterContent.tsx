@@ -1,4 +1,4 @@
-import { FilterData, orderBy, categories, locations } from '@constants/FilterData';
+import { FilterData, orderBy, categories, locations } from '@types/FilterData';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Chip, Button, useTheme } from 'react-native-paper';
@@ -64,6 +64,7 @@ export default function FilterContent({ value, onClear, onChange }: Props) {
                         ]}
                         textStyle={{
                             color: selectedOrderBy === order ? '#fff' : colors.onSurface,
+                            fontWeight: selectedOrderBy === order ? 'bold' : 'normal',
                         }}
                         icon={
                             selectedOrderBy === order
@@ -93,6 +94,7 @@ export default function FilterContent({ value, onClear, onChange }: Props) {
                         ]}
                         textStyle={{
                             color: selectedLocations.includes(loc) ? '#fff' : colors.onSurface,
+                            fontWeight: selectedLocations.includes(loc) ? 'bold' : 'normal',
                         }}
                         icon={
                             selectedLocations.includes(loc)
@@ -123,6 +125,7 @@ export default function FilterContent({ value, onClear, onChange }: Props) {
                         ]}
                         textStyle={{
                             color: selectedCategories.includes(cat) ? '#fff' : colors.onSurface,
+                            fontWeight: selectedCategories.includes(cat) ? 'bold' : 'normal',
                         }}
                         icon={
                             selectedCategories.includes(cat)

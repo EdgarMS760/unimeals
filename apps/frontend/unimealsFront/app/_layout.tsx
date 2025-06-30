@@ -9,6 +9,7 @@ import { Slot } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 export default function RootLayout() {
   const scheme = useColorScheme();
@@ -27,15 +28,17 @@ export default function RootLayout() {
   };
 
   return (
-    <GestureHandlerRootView>
-
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <PaperProvider theme={paperTheme}>
           <NavigationThemeProvider value={navigationTheme}>
-            <Slot />
+            <BottomSheetModalProvider>
+              <Slot />
+            </BottomSheetModalProvider>
           </NavigationThemeProvider>
         </PaperProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
+
   );
 }
