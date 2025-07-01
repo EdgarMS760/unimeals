@@ -30,7 +30,7 @@ export default function Header() {
             </View>
 
             {/* Botón de perfil */}
-            <TouchableOpacity onPress={() => navigation.navigate('profile' as never)}>
+            <TouchableOpacity onPress={() => navigation.navigate('login' as never)}>
                 <IconButton icon="account" size={48} iconColor='black'  />
             </TouchableOpacity>
         </View>
