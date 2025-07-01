@@ -12,7 +12,7 @@ export default function TabLayout() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <Header /> {/* 👈 Este es tu header común para todas las tabs */}
+      <Header />
 
       <Tabs
         tabBar={(props) => <CustomTabBar {...props} />}
@@ -25,7 +25,7 @@ export default function TabLayout() {
           options={{
             title: 'Inicio',
             tabBarIcon: ({ color }) => (
-              <AntDesign name="home" size={24} color={color} />
+              <AntDesign name="home" size={32} color={color} />
             ),
           }}
         />
@@ -41,7 +41,7 @@ export default function TabLayout() {
           options={{
             title: 'Chats',
             tabBarIcon: ({ color }) => (
-              <AntDesign name="message1" size={24} color={color} />
+              <AntDesign name="message1" size={32} color={color} />
             ),
           }}
         />

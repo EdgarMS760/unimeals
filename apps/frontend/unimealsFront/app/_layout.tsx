@@ -1,4 +1,3 @@
-import { PaperProvider } from 'react-native-paper'; 
 import {
   ThemeProvider as NavigationThemeProvider,
   DefaultTheme as NavigationLightTheme,
@@ -6,7 +5,11 @@ import {
 } from '@react-navigation/native';
 import { LightTheme, DarkTheme } from '@constants/theme/paperTheme';
 import { useColorScheme } from 'react-native';
-import {Slot, Stack} from 'expo-router';
+import { Slot } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { PaperProvider } from 'react-native-paper';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 
 export default function RootLayout() {
@@ -26,10 +29,16 @@ export default function RootLayout() {
   };
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <NavigationThemeProvider value={navigationTheme}>
-        <Slot></Slot>
-      </NavigationThemeProvider>
-    </PaperProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <PaperProvider theme={paperTheme}>
+          <NavigationThemeProvider value={navigationTheme}>
+            <BottomSheetModalProvider>
+              <Slot />
+            </BottomSheetModalProvider>
+          </NavigationThemeProvider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

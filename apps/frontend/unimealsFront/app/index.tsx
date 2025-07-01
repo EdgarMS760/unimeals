@@ -100,11 +100,8 @@ export default function LogIn() {
                                 </View>
                             </ScrollView>
                         </View>
-
-
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
 }
-

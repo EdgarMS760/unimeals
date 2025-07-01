@@ -1,54 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Animated,
 } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Svg, { Path } from 'react-native-svg';
 import { AntDesign } from '@expo/vector-icons';
-import { Badge } from 'react-native-paper';
+import { Badge, useTheme } from 'react-native-paper';
 import ModalCreatePub from './ModalCreatePub';
 
 const { width } = Dimensions.get('window');
 
 export default function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-
     const [isModalVisible, setModalVisible] = useState(false);
+    const { colors } = useTheme();
 
     const openModal = () => setModalVisible(true);
     const closeModal = () => setModalVisible(false);
 
-
-    // se filtran las rutas para los íconos de la izquierda y derecha
     const leftRoutes = state.routes.filter(r => r.name === 'feed');
     const rightRoutes = state.routes.filter(r => r.name === 'chats');
 
+    const isChatsFocused = state.routes[state.index].name === 'chats';
+
+    const curveOpacity = useRef(new Animated.Value(1)).current;
+    const fabScale = useRef(new Animated.Value(1)).current;
+
+    // Animaciones al cambiar de pestaña
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(curveOpacity, {
+                toValue: isChatsFocused ? 0 : 1,
+                duration: 100,
+                useNativeDriver: true,
+            }),
+            Animated.timing(fabScale, {
+                toValue: isChatsFocused ? 0 : 1,
+                duration: 300,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, [isChatsFocused]);
+
+    const bgColor = isChatsFocused ? colors.surface : colors.primary;
+
     return (
-        <View style={styles.wrapper}>
-            <View style={styles.container}>
+        <Animated.View
+            style={[
+                styles.wrapper,
+                {
+                    backgroundColor: bgColor,
+                    borderTopWidth: isChatsFocused ? 1 : 0,
+                    borderTopColor: isChatsFocused ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+                },
+            ]}
+        >
+
+            {/* Curva SVG */}
+            <Animated.View style={[styles.container, { opacity: curveOpacity }]}>
                 <Svg width={width} height={70} viewBox={`0 0 ${width} 70`}>
                     <Path
                         d={generatePath(width)}
-                        fill="#ffffff"   // curva blanca
+                        fill={colors.surface}
                         stroke="#000"
                         strokeWidth={1}
                     />
                 </Svg>
-            </View>
+            </Animated.View>
 
-            {/* Botón central */}
-            <View style={styles.fabContainer}>
-                <TouchableOpacity
-                    onPress={openModal}
-                    style={styles.fab}
-                >
+            {/* Botón central (FAB) */}
+            <Animated.View style={[styles.fabContainer, { transform: [{ scale: fabScale }] }]}>
+                <TouchableOpacity onPress={openModal} style={styles.fab}>
                     <AntDesign name="plus" size={30} color="black" />
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
 
-            {/* Íconos Izquierda */}
+            {/* Iconos izquierda */}
             <View style={styles.leftTabIcons}>
                 {leftRoutes.map(route => {
                     const { options } = descriptors[route.key];
@@ -65,8 +95,8 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                         }
                     };
 
-                    const iconColor = isFocused ? '#000' : '#999';
-                    const icon = options.tabBarIcon?.({ color: iconColor, size: 26, focused: isFocused });
+                    const iconColor = isFocused ? colors.onSurface : colors.backgroundSecondary;
+                    const icon = options.tabBarIcon?.({ color: iconColor, focused: isFocused });
 
                     return (
                         <TouchableOpacity key={route.key} style={styles.tabButton} onPress={onPress}>
@@ -76,7 +106,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                 })}
             </View>
 
-            {/* Íconos Derecha */}
+            {/* Iconos derecha */}
             <View style={styles.rightTabIcons}>
                 {rightRoutes.map(route => {
                     const { options } = descriptors[route.key];
@@ -93,8 +123,8 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                         }
                     };
 
-                    const iconColor = isFocused ? '#000' : '#999';
-                    const icon = options.tabBarIcon?.({ color: iconColor, size: 26, focused: isFocused });
+                    const iconColor = isFocused ? colors.onSurface : colors.backgroundSecondary;
+                    const icon = options.tabBarIcon?.({ color: iconColor, focused: isFocused });
 
                     return (
                         <TouchableOpacity key={route.key} style={styles.tabButton} onPress={onPress}>
@@ -106,20 +136,18 @@ export default function CustomTabBar({ state, descriptors, navigation }: BottomT
                     );
                 })}
             </View>
-            <ModalCreatePub visible={isModalVisible} onClose={closeModal} />
 
-        </View>
+            <ModalCreatePub visible={isModalVisible} onClose={closeModal} />
+        </Animated.View>
     );
 }
 
-
 const styles = StyleSheet.create({
     wrapper: {
-        height: 45,
+        height: 75,
         width: '100%',
         position: 'absolute',
         bottom: 0,
-        backgroundColor: '#2e9863',
     },
     container: {
         position: 'absolute',
@@ -127,11 +155,10 @@ const styles = StyleSheet.create({
     },
     fabContainer: {
         position: 'absolute',
-        bottom: 5,
-        left: '50%',
-        transform: [{ translateX: -30 }],
-        zIndex: 10,
+        bottom: 45,
+        alignSelf: 'center',
     },
+
     fab: {
         width: 60,
         height: 60,
@@ -142,11 +169,10 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#000',
     },
-
     leftTabIcons: {
         position: 'absolute',
-        left: 20,
-        bottom: 0,
+        left: 5,
+        bottom: 10,
         height: '100%',
         width: 120,
         flexDirection: 'row',
@@ -155,8 +181,8 @@ const styles = StyleSheet.create({
     },
     rightTabIcons: {
         position: 'absolute',
-        right: 20,
-        bottom: 0,
+        right: 5,
+        bottom: 10,
         height: '100%',
         width: 120,
         flexDirection: 'row',
@@ -170,7 +196,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     badge: {
         position: 'absolute',
         top: 4,
@@ -178,20 +203,19 @@ const styles = StyleSheet.create({
     },
 });
 
-
 function generatePath(width: number) {
     const center = width / 2;
     const height = 70;
     const peakHeight = 85;
 
     return `
-    M0,${height}
-    H${center - 220}
-    C${center - 40},${height} ${center - 40},${height - peakHeight} ${center},${height - peakHeight}
-    C${center + 40},${height - peakHeight} ${center + 40},${height} ${center + 220},${height}
-    H${width}
-    V0
-    H0
-    Z
+        M0,${height}
+        H${center - 220}
+        C${center - 40},${height} ${center - 40},${height - peakHeight} ${center},${height - peakHeight}
+        C${center + 40},${height - peakHeight} ${center + 40},${height} ${center + 220},${height}
+        H${width}
+        V0
+        H0
+        Z
     `;
 }
