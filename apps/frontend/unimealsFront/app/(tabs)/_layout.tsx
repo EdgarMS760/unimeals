@@ -45,17 +45,7 @@ export default function TabLayout() {
             ),
           }}
         />
-       
-        <Tabs.Screen
-                name="login"
-                options={{
-                    title: 'Log In',
-                    tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="home" size={24} color="black" />
-                    ),
-                    tabBarStyle: { display: 'none'}
-                }}
-            />
+
       </Tabs>
     </View>
   );
@@ -63,6 +53,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+      flex: 1,
   },
 });

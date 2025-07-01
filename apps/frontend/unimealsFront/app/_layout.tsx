@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import { LightTheme, DarkTheme } from '@constants/theme/paperTheme';
 import { useColorScheme } from 'react-native';
-import { Stack } from 'expo-router';
+import {Slot, Stack} from 'expo-router';
 
 
 export default function RootLayout() {
@@ -28,10 +28,7 @@ export default function RootLayout() {
   return (
     <PaperProvider theme={paperTheme}>
       <NavigationThemeProvider value={navigationTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+        <Slot></Slot>
       </NavigationThemeProvider>
     </PaperProvider>
   );

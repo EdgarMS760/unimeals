@@ -1,4 +1,5 @@
-import {StyleSheet, View, Text, TextInput} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
+import {TextInput} from 'react-native-paper';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import {useState} from "react";
 
@@ -9,7 +10,7 @@ export function InputView() {
     return(
         <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Nombre</Text>
-            <TextInput style={styles.inputStyle}></TextInput>
+            <TextInput label="Título" mode="outlined" style={styles.inputStyle}></TextInput>
 
         </View>
     );
