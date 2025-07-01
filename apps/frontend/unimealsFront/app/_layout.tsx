@@ -11,6 +11,7 @@ import { PaperProvider } from 'react-native-paper';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
+
 export default function RootLayout() {
   const scheme = useColorScheme();
   const paperTheme = scheme === 'dark' ? DarkTheme : LightTheme;
@@ -39,6 +40,5 @@ export default function RootLayout() {
         </PaperProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
-
   );
 }

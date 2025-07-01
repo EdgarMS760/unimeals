@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import {Tabs} from 'expo-router';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import CustomTabBar from '@components/ui/CustomTabBar';
@@ -45,6 +45,7 @@ export default function TabLayout() {
             ),
           }}
         />
+
       </Tabs>
     </View>
   );
@@ -52,6 +53,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+      flex: 1,
   },
 });
