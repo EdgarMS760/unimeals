@@ -10,7 +10,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import FilterBottomSheet from '@ui/filterBar/FilterBottomSheet';
 import DrawerMenu from '@ui/DrawerMenu';
 import { RootStackParamList, DrawerMenuItem } from '@types/navigation';
-import { router, usePathname, useRouter } from 'expo-router';
+import { router, usePathname } from 'expo-router';
 
 type NavigationProps = NavigationProp<RootStackParamList>;
 
