@@ -2,7 +2,7 @@ import {StyleSheet, View, Text, Pressable} from 'react-native';
 import React, {useState} from "react";
 import {TextInput, Avatar, IconButton, MD3Colors, useTheme, Button} from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
-
+import { router } from 'expo-router';
 
 type MyComponentProps = {
     posPageIndex: string;
@@ -211,9 +211,8 @@ export function SignUpForm({posPageIndex, setPosImageIndex}: MyComponentProps) {
             <View style={styles.textLinkContainer}>
                 <Text style={styles.textLabel}>o</Text>
                 <Pressable
-                    onPress={() => {
-                        setPosImageIndex('1')
-                    }}
+                    onPress={
+                        () => router.push('/feed')}
                 >
                     {({pressed}) => (
                         <Text style={[styles.textLink, {opacity: pressed ? 0.5 : 1}]}>

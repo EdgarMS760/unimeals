@@ -1,17 +1,12 @@
-# from app import create_app
+from dotenv import load_dotenv
+load_dotenv()
 
-# app = create_app()
+from app import create_app
+from app.extensions import db
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+app = create_app()
 
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def hello():
-    return 'Hola Mundo desde Flask 🚀'
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
