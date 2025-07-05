@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 from app.config import Config
 from app.extensions import db
 from app.routes.auth import auth_bp
@@ -10,6 +11,9 @@ def create_app():
 
     # Inicializar extensiones
     db.init_app(app)
+
+    # Habilitar migraciones
+    migrate = Migrate(app, db)
 
     # Registrar blueprints
     app.register_blueprint(auth_bp)
